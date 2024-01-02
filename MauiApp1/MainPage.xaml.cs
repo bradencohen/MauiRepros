@@ -8,67 +8,37 @@ namespace MauiApp1
         {
             InitializeComponent();
 
-            // grid.MaximumWidthRequest = ( DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density ) - 8;
+            carousel.IsVisible = false;
+            lbl.IsVisible = false;
 
-            //bool demonstrateWorking = false;
-            
-            //if( demonstrateWorking )
-            //{
-            //    contentGrid.Add( GetBorderCSharp() );
-            //}
-            //else
-            //{
-            //    SetBorderFromXaml();
-            //}
+            var exampleItems = new List<SampleCarouselItem>
+            {
+                new SampleCarouselItem( "First", "First CarouselView item" ),
+                new SampleCarouselItem( "Second", "Second CarouselView item" ),
+                new SampleCarouselItem( "Third", "Third CarouselView item" ),
+                new SampleCarouselItem( "Fourth", "Fourth CarouselView item" ),
+                new SampleCarouselItem( "Fifth", "Fifth CarouselView item" ),
+            };
+
+            carousel.ItemsSource = exampleItems;
+
+            // to be filed as a bug
+            btnShowCarouselBug.Clicked += ( s, e ) => carousel.IsVisible = true;
+
+            // https://github.com/dotnet/maui/issues/19592
+            btnShowLineHeightBug.Clicked += ( s, e ) => lbl.IsVisible = true;
         }
 
+        private class SampleCarouselItem
+        {
+            public SampleCarouselItem( string title, string description )
+            {
+                Title = title;
+                Description = description;
+            }
 
-        //private void SetBorderFromXaml()
-        //{
-        //    Dispatcher.Dispatch( async () =>
-        //    {
-        //        var borderXaml = await GetBorderXaml();
-        //        contentGrid.Clear();
-        //        contentGrid.Add( new ContentView().LoadFromXaml( borderXaml ) );
-        //    } );
-        //}
-
-        //private View GetBorderCSharp()
-        //{
-        //    return new Border
-        //    {
-        //        BackgroundColor = Colors.LightBlue,
-        //        StrokeShape = new RoundRectangle
-        //        {
-        //            CornerRadius = 16
-        //        },
-        //        Content = new Label
-        //        {
-        //            Text = "Hello, world!",
-        //            HorizontalOptions = LayoutOptions.Center,
-        //            VerticalOptions = LayoutOptions.Center
-        //        },
-        //        WidthRequest = 200,
-        //        HeightRequest = 200
-        //    };
-        //}
-
-
-        //private async Task<string> GetBorderXaml()
-        //{
-        //    string filePath = "BorderXaml.txt";
-
-        //    var stream = await FileSystem.OpenAppPackageFileAsync( filePath );
-
-        //    if( stream == null )
-        //    {
-        //        return null;
-        //    }
-
-        //    using( var reader = new StreamReader( stream ) )
-        //    {
-        //        return await reader.ReadToEndAsync();
-        //    }
-        //}
+            public string Title { get; set; }
+            public string Description { get; set; }
+        }
     }
 }
